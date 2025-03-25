@@ -7,6 +7,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 LOGIN_URL = "https://ess.skycitygroup.com/ESS/login.aspx?"
+with open("../passwords.txt", "r") as f:
+    content = f.readlines()
+username = content[0].strip()
+password = content[1].strip()
 
 # Set up Chrome options
 chrome_options = Options()
