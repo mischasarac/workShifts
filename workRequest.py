@@ -37,7 +37,7 @@ time.sleep(5)
 page_source = driver.page_source
 
 # Save to file for inspection
-with open("full_page.html", "w", encoding="utf-8") as f:
+with open("./storedData/full_page.html", "w", encoding="utf-8") as f:
     f.write(page_source)
 
 print("Page source saved. Open full_page.html to inspect.")
