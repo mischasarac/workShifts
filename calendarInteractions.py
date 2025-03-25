@@ -1,7 +1,7 @@
 import os
 import pickle
 import datetime
-import htmlParser
+from htmlParser import getShifts
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
@@ -10,11 +10,11 @@ from google.auth.transport.requests import Request
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 # Authenticate and create the service
-def authenticate_google_account():
+def authenticateGoogleAccount():
     creds = None
     # The file token.pickle stores the user's access and refresh tokens
-    if os.path.exists('./storedData/token.pickle'):
-        with open('./storedData/token.pickle', 'rb') as token:
+    if os.path.exists('../storedData/token.pickle'):
+        with open('../storedData/token.pickle', 'rb') as token:
             creds = pickle.load(token)
     
     # If there's no valid token, let the user log in and get the credentials
@@ -23,19 +23,19 @@ def authenticate_google_account():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                './storedData/credentials.json', SCOPES)
+                '../storedData/credentials.json', SCOPES)
             creds = flow.run_local_server(port=8080)
         
         # Save the credentials for the next run
-        with open('./storedData/token.pickle', 'wb') as token:
+        with open('../storedData/token.pickle', 'wb') as token:
             pickle.dump(creds, token)
     
     service = build('calendar', 'v3', credentials=creds)
     return service
 
 # Function to add shift events to the calendar
-def add_shifts_to_calendar(shifts):
-    service = authenticate_google_account()
+def addShiftsToCalendar(shifts):
+    service = authenticateGoogleAccount()
     
     for shift in shifts:
         event = {
@@ -56,14 +56,9 @@ def add_shifts_to_calendar(shifts):
         }
 
         # Insert event into Google Calendar
-        # event_result = service.events().insert(calendarId='primary', body=event).execute()
+        event_result = service.events().insert(calendarId='primary', body=event).execute()
         print(f"Event created: {event['summary']} at {event['start']['dateTime']}")
         # print("event created")
 
-# Example shift data: [datetime objects]
-shifts = htmlParser.getShiftDates().getShifts()
 
-
-# Add shifts to Google Calendar
-add_shifts_to_calendar(shifts)
 
