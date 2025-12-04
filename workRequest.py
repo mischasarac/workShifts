@@ -7,12 +7,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 
-def getWorkHTML():
+def getWorkHTML(USERNAME, PASSWORD):
     LOGIN_URL = "https://ess.skycitygroup.com/ESS/login.aspx?"
-    # with open("../passwords.txt", "r") as f:
-    #     content = f.readlines()
-    username = content[0].strip()
-    password = content[1].strip()
+
+    username = USERNAME
+    password = PASSWORD
 
     # Set up Chrome options
     chrome_options = Options()
@@ -39,12 +38,6 @@ def getWorkHTML():
 
     # Get the full page source
     page_source = driver.page_source
-
-    # Save to file for inspection
-    # with open("../storedData/full_page.html", "w", encoding="utf-8") as f:
-    #     f.write(page_source)
-
-    # print("Page source saved. Open full_page.html to inspect.")
 
     driver.quit()
     return page_source

@@ -1,0 +1,13 @@
+# All python-related stuff
+.venv/
+__pycache__/
+*/.venv/*
+
+# Environment variables file
+.env
+
+# Token and credential files
+*.token
+*.credentials
+*.key
+*.pickle
