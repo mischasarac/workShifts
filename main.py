@@ -3,16 +3,18 @@ from htmlParser import getShifts
 from calendarInteractions import addShiftsToCalendar
 from validateNewShifts import validateNewShifts
 
-pageHTML = getWorkHTML()
 
-upComingShifts = getShifts(pageHTML)
+if __name__ == "__main__":
+    pageHTML = getWorkHTML()
 
-newShifts = validateNewShifts(upComingShifts)
+    upComingShifts = getShifts(pageHTML)
 
-# print(newShifts)
+    newShifts = validateNewShifts(upComingShifts)
 
-if not newShifts:
-    print("No new shifts to append")
-else:
-    print("adding shifts")
-    addShiftsToCalendar(upComingShifts)
+    # print(newShifts)
+
+    if not newShifts:
+        print("No new shifts to append")
+    else:
+        print("adding shifts")
+        addShiftsToCalendar(upComingShifts)
